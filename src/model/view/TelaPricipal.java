@@ -4,6 +4,8 @@ import model.bean.MudaCores;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -21,10 +23,17 @@ public class TelaPricipal extends JFrame {
     ///Imagens
     private JLabel lblImagemOriginal;
     private JLabel lblImagemAlterada;
+    private JSlider slider;
+
+    private JSlider sliderR;
+    private JSlider sliderG;
+    private JSlider sliderB;
+    private JSlider sliderFocinho;
+    private JButton btnFocinho;
 
 
     public TelaPricipal() {
-        this.setSize(820, 480);
+        this.setSize(820, 500);
         setResizable(false);
         setTitle("Alterador de Imagens");
         setLayout(null);
@@ -125,7 +134,7 @@ public class TelaPricipal extends JFrame {
                 try {
 
 
-                    lblImagemAlterada.setIcon(new ImageIcon(MudaCores.pretobranco2(ImageIO.read(new File("src\\model\\media\\cachorro.jpg")))));
+                    lblImagemAlterada.setIcon(new ImageIcon(MudaCores.pretobranco2(ImageIO.read(new File("src\\model\\media\\cachorro.jpg")), slider.getValue())));
                     lblImagemAlterada.updateUI();
                 } catch (Exception ex) {
                     System.out.println(ex);
@@ -153,6 +162,85 @@ public class TelaPricipal extends JFrame {
         getContentPane().add(lblImagemAlterada);
 
 
+        slider = new JSlider();
+        slider.setMaximum(255);
+        slider.setValue(127);
+        slider.setMinimum(0);
+        slider.setBounds(25, 375, 200, 30);
+        slider.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                try {
+
+
+                    lblImagemAlterada.setIcon(new ImageIcon(MudaCores.pretobranco2(ImageIO.read(new File("src\\model\\media\\cachorro.jpg")), slider.getValue())));
+                    lblImagemAlterada.updateUI();
+                } catch (Exception ex) {
+                    System.out.println(ex);
+                }
+            }
+        });
+
+        getContentPane().add(slider);
+        sliderR = new JSlider();
+        sliderR.setMaximum(255);
+        sliderR.setValue(127);
+        sliderR.setMinimum(0);
+        sliderR.setBounds(400, 365, 200, 30);
+        getContentPane().add(sliderR);
+
+        sliderG = new JSlider();
+        sliderG.setMaximum(255);
+        sliderG.setValue(127);
+        sliderG.setMinimum(0);
+        sliderG.setBounds(400, 395, 200, 30);
+        getContentPane().add(sliderG);
+
+        sliderB = new JSlider();
+        sliderB.setMaximum(255);
+        sliderB.setValue(127);
+        sliderB.setMinimum(0);
+        sliderB.setBounds(400, 425, 200, 30);
+        getContentPane().add(sliderB);
+
+        sliderFocinho = new JSlider();
+        sliderFocinho.setMaximum(127);
+        sliderFocinho.setValue(127);
+        sliderFocinho.setMinimum(0);
+        sliderFocinho.setBounds(670, 365, 120, 30);
+        sliderFocinho.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                try {
+
+
+                    lblImagemAlterada.setIcon(new ImageIcon(MudaCores.focinho(ImageIO.read(new File("src\\model\\media\\cachorro.jpg")), sliderR.getValue(), sliderG.getValue(), sliderB.getValue(), sliderFocinho.getValue())));
+                    lblImagemAlterada.updateUI();
+                } catch (Exception ex) {
+                    System.out.println(ex);
+                }
+            }
+        });
+        getContentPane().add(sliderFocinho);
+
+
+
+        btnFocinho = new JButton("Focinho");
+        btnFocinho.setBounds(670, 395, 120, 35);
+        btnFocinho.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+
+
+                    lblImagemAlterada.setIcon(new ImageIcon(MudaCores.focinho(ImageIO.read(new File("src\\model\\media\\cachorro.jpg")), sliderR.getValue(), sliderG.getValue(), sliderB.getValue(), sliderFocinho.getValue())));
+                    lblImagemAlterada.updateUI();
+                } catch (Exception ex) {
+                    System.out.println(ex);
+                }
+            }
+        });
+        getContentPane().add(btnFocinho);
     }
 
 }
